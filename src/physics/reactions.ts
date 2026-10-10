@@ -4,7 +4,10 @@
  * Valid for ion temperatures of roughly 0.2-100 keV (mildly extrapolated above).
  */
 
-export type Species = 'D' | 'T' | 'He3';
+export type Species = 'D' | 'T' | 'He3' | 'He4' | 'H';
+export const ALL_SPECIES: Species[] = ['D', 'T', 'He3', 'He4', 'H'];
+/** Fusion ash: not fuel in any reaction here (He-4 and protons). */
+export const ASH: Species[] = ['He4', 'H'];
 
 export interface Reaction {
   id: string;
@@ -19,6 +22,8 @@ export interface Reaction {
   bg: number;
   mrc2: number;
   c: [number, number, number, number, number, number, number];
+  /** Net change in ions per reaction event (negative = consumed) */
+  delta: Partial<Record<Species, number>>;
 }
 
 export const REACTIONS: Record<string, Reaction> = {
@@ -27,24 +32,28 @@ export const REACTIONS: Record<string, Reaction> = {
     energyMeV: 17.59, chargedMeV: 3.52,
     bg: 34.3827, mrc2: 1124656,
     c: [1.17302e-9, 1.51361e-2, 7.51886e-2, 4.60643e-3, 1.35e-2, -1.0675e-4, 1.366e-5],
+    delta: { D: -1, T: -1, He4: 1 },
   },
   DHe3: {
     id: 'DHe3', label: 'D + ³He → ⁴He + p', a: 'D', b: 'He3',
     energyMeV: 18.35, chargedMeV: 18.35,
     bg: 68.7508, mrc2: 1124572,
     c: [5.51036e-10, 6.41918e-3, -2.02896e-3, -1.9108e-5, 1.35776e-4, 0, 0],
+    delta: { D: -1, He3: -1, He4: 1, H: 1 },
   },
   DDn: {
     id: 'DDn', label: 'D + D → ³He + n', a: 'D', b: 'D',
     energyMeV: 3.27, chargedMeV: 0.82,
     bg: 31.397, mrc2: 937814,
     c: [5.4336e-12, 5.85778e-3, 7.68222e-3, 0, -2.964e-6, 0, 0],
+    delta: { D: -2, He3: 1 },
   },
   DDp: {
     id: 'DDp', label: 'D + D → T + p', a: 'D', b: 'D',
     energyMeV: 4.03, chargedMeV: 4.03,
     bg: 31.397, mrc2: 937814,
     c: [5.65718e-12, 3.41267e-3, 1.99167e-3, 0, 1.0506e-5, 0, 0],
+    delta: { D: -2, T: 1, H: 1 },
   },
 };
 
@@ -68,16 +77,17 @@ export interface Fuel {
   name: string;
   /** Ion fractions (sum to 1) */
   mix: Partial<Record<Species, number>>;
-  reactions: Reaction[];
 }
 
 export const FUELS: Record<Fuel['id'], Fuel> = {
-  DT: { id: 'DT', name: 'D-T (50:50)', mix: { D: 0.5, T: 0.5 }, reactions: [REACTIONS.DT] },
+  DT: { id: 'DT', name: 'D-T (50:50)', mix: { D: 0.5, T: 0.5 } },
   DHe3: {
-    id: 'DHe3', name: 'D-³He (50:50)', mix: { D: 0.5, He3: 0.5 },
-    reactions: [REACTIONS.DHe3, REACTIONS.DDn, REACTIONS.DDp],
+    id: 'DHe3', name: 'D-³He (50:50)', mix: { D: 0.5, He3: 0.5 }
   },
-  DD: { id: 'DD', name: 'D-D', mix: { D: 1 }, reactions: [REACTIONS.DDn, REACTIONS.DDp] },
+  DD: { id: 'DD', name: 'D-D', mix: { D: 1 } },
 };
 
-export const CHARGE: Record<Species, number> = { D: 1, T: 1, He3: 2 };
+export const CHARGE: Record<Species, number> = { D: 1, T: 1, He3: 2, He4: 2, H: 1 };
+
+/** Every reaction is evaluated for every plasma; absent species make the rate zero. */
+export const ALL_REACTIONS: Reaction[] = [REACTIONS.DT, REACTIONS.DHe3, REACTIONS.DDn, REACTIONS.DDp];

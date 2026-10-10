@@ -4,7 +4,7 @@ An interactive, browser-based comparison of fusion fuels (D-T, D-³He, D-D) buil
 
 - **Fuels**: the nuclei involved (D, T, ³He, ⁴He).
 - **Reactions**: Bosch-Hale reactivity ⟨σv⟩(T), ignition triple product nTτ, and reaction energies/neutron shares.
-- **Reactor**: a 0-D time-dependent simulation (fusion heating vs bremsstrahlung vs transport loss, plus external heating).
+- **Reactor**: a 0-D time-dependent simulation (fusion heating vs bremsstrahlung vs transport loss, plus external heating) that tracks D, T, ³He, ⁴He and proton densities, so fuel burns up and fusion ash builds up. Fuel feed and ash removal times are adjustable (slider maximum = off).
 
 ## Run
 
@@ -19,7 +19,8 @@ npm run build    # typecheck + production build
 
 - Reactivities: Bosch & Hale, *Nucl. Fusion* 32 (1992) 611, valid up to ~100 keV (the sim is capped there).
 - Bremsstrahlung: NRL Plasma Formulary. Ions and electrons share one temperature.
-- Ignores: spatial profiles, impurities, helium-ash dilution, fuel burn-up, synchrotron radiation, secondary burn of D-D products, and finite charged-particle confinement.
+- Included: burn-up, ash dilution, and secondary burn of D-D products (T, ³He) in every plasma.
+- Ignores: spatial profiles, impurities, synchrotron radiation, non-thermal (slowing-down) ions, energy carried by injected/pumped particles, and finite charged-particle confinement. The ignition-curve plot assumes a fresh fuel load with no ash.
 - Educational, not a reactor design tool. Qualitative results (D-³He needs ~10x the nTτ of D-T and is not truly neutron-free because of D-D side reactions) are the point.
 
 ## Layout
