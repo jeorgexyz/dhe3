@@ -93,12 +93,17 @@ export default function Reactor() {
   }, [running]);
 
   const out = observe(params, state);
+  const losses = out.brems + out.loss;
   const verdict =
-    out.charged > out.brems + out.loss
-      ? 'Self-heating exceeds losses: temperature is rising on its own.'
-      : out.charged > out.brems
-        ? 'Alpha/charged heating beats radiation, but confinement loss still wins.'
-        : 'Radiation losses exceed self-heating at this temperature.';
+    out.charged <= 0 || state.tKeV <= 0.5
+      ? 'The plasma is cold: almost no fusion is happening.'
+      : Math.abs(out.charged - losses) < 0.05 * losses
+        ? 'Steady burn: charged-product heating balances losses.'
+        : out.charged > losses
+          ? 'Self-heating exceeds losses: temperature is rising on its own.'
+          : out.charged > out.brems
+            ? 'Charged-product heating beats radiation, but transport loss still wins: the plasma is cooling.'
+            : 'Radiation losses exceed self-heating at this temperature.';
 
   return (
     <div className="stack">
