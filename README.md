@@ -6,6 +6,8 @@ An interactive, browser-based comparison of fusion fuels (D-T, D-³He, D-D) buil
 - **Reactions**: Bosch-Hale reactivity ⟨σv⟩(T), ignition triple product nTτ, and reaction energies/neutron shares.
 - **Reactor**: a 0-D time-dependent simulation (fusion heating vs bremsstrahlung vs transport loss, plus external heating) that tracks D, T, ³He, ⁴He and proton densities, so fuel burns up and fusion ash builds up. Fuel feed and ash removal times are adjustable (slider maximum = off).
 
+**Live demo:** https://jeorgexyz.github.io/dhe3/
+
 ## Run
 
 ```
@@ -27,3 +29,7 @@ npm run build    # typecheck + production build
 
 - `src/physics/` typed physics core with tests
 - `src/components/` the three views
+
+## License
+
+MIT, Copyright (c) 2024-2026 Jeorge D. Anderson II. See [LICENSE](LICENSE).
