@@ -154,7 +154,7 @@ export default function Reactor() {
         <h2>Temperature</h2>
         <div className="chart small">
           <ResponsiveContainer>
-            <LineChart data={history} margin={{ left: 10, right: 20, top: 10 }}>
+            <LineChart data={history} margin={{ left: 10, right: 20, top: 10, bottom: 18 }}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="time" type="number" domain={['dataMin', 'dataMax']} label={{ value: 'Time (s)', position: 'insideBottom', offset: -5 }} />
               <YAxis label={{ value: 'keV', angle: -90, position: 'insideLeft' }} />
@@ -166,12 +166,12 @@ export default function Reactor() {
         <h2>Power balance</h2>
         <div className="chart small">
           <ResponsiveContainer>
-            <LineChart data={history} margin={{ left: 10, right: 20, top: 10 }}>
+            <LineChart data={history} margin={{ left: 10, right: 20, top: 10, bottom: 18 }}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="time" type="number" domain={['dataMin', 'dataMax']} />
               <YAxis label={{ value: 'MW/m³', angle: -90, position: 'insideLeft' }} />
               <Tooltip formatter={(v: number) => v.toPrecision(3)} />
-              <Legend />
+              <Legend wrapperStyle={{ paddingTop: 14 }} />
               <Line dataKey="heat" name="Charged-product heating" stroke="#2e86ab" dot={false} strokeWidth={2} isAnimationActive={false} />
               <Line dataKey="brem" name="Bremsstrahlung" stroke="#e9a23b" dot={false} strokeWidth={2} isAnimationActive={false} />
               <Line dataKey="lossMW" name="Transport loss" stroke="#6a994e" dot={false} strokeWidth={2} isAnimationActive={false} />
@@ -181,12 +181,12 @@ export default function Reactor() {
         <h2>Plasma composition</h2>
         <div className="chart small">
           <ResponsiveContainer>
-            <LineChart data={history} margin={{ left: 10, right: 20, top: 10 }}>
+            <LineChart data={history} margin={{ left: 10, right: 20, top: 10, bottom: 18 }}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="time" type="number" domain={['dataMin', 'dataMax']} />
               <YAxis domain={[0, 100]} label={{ value: '% of ions', angle: -90, position: 'insideLeft' }} />
               <Tooltip formatter={(v: number) => `${v.toFixed(1)}%`} />
-              <Legend />
+              <Legend wrapperStyle={{ paddingTop: 14 }} />
               <Line dataKey="D" name="D" stroke="#2e86ab" dot={false} strokeWidth={2} isAnimationActive={false} />
               <Line dataKey="Tr" name="T" stroke="#d1495b" dot={false} strokeWidth={2} isAnimationActive={false} />
               <Line dataKey="He3" name="³He" stroke="#6a994e" dot={false} strokeWidth={2} isAnimationActive={false} />

@@ -1,5 +1,7 @@
 # D-He3 Fusion Lab
 
+**Live demo: https://jeorgexyz.github.io/dhe3/**
+
 An interactive, browser-based comparison of fusion fuels (D-T, D-³He, D-D) built on published reaction data and a simple plasma power-balance model.
 
 - **Fuels**: the nuclei involved (D, T, ³He, ⁴He).

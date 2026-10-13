@@ -47,14 +47,14 @@ export default function Reactivity() {
         </p>
         <div className="chart">
           <ResponsiveContainer>
-            <LineChart data={data} margin={{ left: 10, right: 20, top: 10 }}>
+            <LineChart data={data} margin={{ left: 10, right: 20, top: 10, bottom: 18 }}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="t" type="number" scale="log" domain={[1, 100]} ticks={[1, 3, 10, 30, 100]}
                 label={{ value: 'Temperature (keV)', position: 'insideBottom', offset: -5 }} />
-              <YAxis scale="log" domain={[1e-24, 1e-15]} allowDataOverflow tickFormatter={fmtExp}
+              <YAxis width={64} scale="log" domain={[1e-24, 1e-15]} allowDataOverflow tickFormatter={fmtExp}
                 label={{ value: '⟨σv⟩ (cm³/s)', angle: -90, position: 'insideLeft' }} />
               <Tooltip formatter={(v: number) => v.toExponential(2)} labelFormatter={(l) => `${l} keV`} />
-              <Legend />
+              <Legend wrapperStyle={{ paddingTop: 14 }} />
               {SERIES.map((s) => (
                 <Line key={s.key} dataKey={s.key} name={s.name} stroke={s.color} dot={false} strokeWidth={2} isAnimationActive={false} />
               ))}
@@ -71,14 +71,14 @@ export default function Reactivity() {
         </p>
         <div className="chart">
           <ResponsiveContainer>
-            <LineChart data={triple} margin={{ left: 10, right: 20, top: 10 }}>
+            <LineChart data={triple} margin={{ left: 10, right: 20, top: 10, bottom: 18 }}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="t" type="number" scale="log" domain={[3, 100]} ticks={[3, 10, 30, 100]}
                 label={{ value: 'Temperature (keV)', position: 'insideBottom', offset: -5 }} />
-              <YAxis scale="log" domain={[1e21, 1e25]} allowDataOverflow tickFormatter={fmtExp}
+              <YAxis width={64} scale="log" domain={[1e21, 1e25]} allowDataOverflow tickFormatter={fmtExp}
                 label={{ value: 'nTτ (keV·s/m³)', angle: -90, position: 'insideLeft' }} />
               <Tooltip formatter={(v: number) => (Number.isFinite(v) ? v.toExponential(2) : 'no ignition')} labelFormatter={(l) => `${l} keV`} />
-              <Legend />
+              <Legend wrapperStyle={{ paddingTop: 14 }} />
               <Line dataKey="DT" name="D-T" stroke={SERIES[0].color} dot={false} strokeWidth={2} isAnimationActive={false} />
               <Line dataKey="DHe3" name="D-³He" stroke={SERIES[1].color} dot={false} strokeWidth={2} isAnimationActive={false} />
             </LineChart>
